@@ -28,8 +28,9 @@ import com.grouplia.pmslia.domain.Stock;
 @Repository("priceDao")
 public class PriceDaoImpl extends BaseDaoImpl implements PriceDao {
 
+	private String selectColumn = "p.f_date as price_date, p.f_value as price_value";
 	private String findLastDateSql = "select max (f_date) from t_price where stock_id = ?";
-	private String findSql = "select p.* from t_price p where p.stock_id = ?";
+	private String findSql = "select " + selectColumn + " from t_price p where p.stock_id = ?";
 	private String insertSql = "insert into t_price (stock_id, f_date, f_value) values (?, ?, ?)";
 	private String deleteSql = "delete from t_price where stock_id = ?";
 	private String deletePriceSql = "delete from t_price where stock_id = ? and f_date = ?";

@@ -18,8 +18,8 @@ alter table t_stock add unique index ux_stock_1 (f_ticker);
 drop table if exists t_stock_relation;
 
 create table t_stock_relation (
-  parent_id    bigint unsigned not null,
-  child_id     bigint unsigned not null
+  parent_id  bigint unsigned not null,
+  child_id   bigint unsigned not null
 )
 engine = innodb;
 
@@ -49,10 +49,10 @@ alter table t_price add constraint fk_price_1 foreign key (stock_id) references 
 drop table if exists t_portfolio;
 
 create table t_portfolio (
-  f_id           bigint unsigned not null,
-  f_name         varchar(50) not null,
-  f_start_date   date not null,
-  indice_id      bigint unsigned not null
+  f_id          bigint unsigned not null,
+  f_name        varchar (50) not null,
+  f_date_start  date not null,
+  indice_id     bigint unsigned not null
 )
 engine = innodb;
 

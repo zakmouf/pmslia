@@ -5,18 +5,31 @@ import java.sql.SQLException;
 import java.util.Date;
 
 import com.grouplia.pmslia.domain.Portfolio;
+import com.grouplia.pmslia.domain.Price;
+import com.grouplia.pmslia.domain.Stock;
 
 public abstract class BaseRowMapper {
 
-	protected Portfolio mapPortfolio(ResultSet rs) throws SQLException {
-		return mapPortfolio(rs, "portfolio");
+	protected Stock mapStock(ResultSet rs, String prefix) throws SQLException {
+		Stock stock = new Stock();
+		stock.setId(getLong(rs, prefix + "_id"));
+		stock.setTicker(getString(rs, prefix + "_ticker"));
+		stock.setName(getString(rs, prefix + "_name"));
+		return stock;
+	}
+
+	protected Price mapPrice(ResultSet rs, String prefix) throws SQLException {
+		Price price = new Price();
+		price.setDate(getDate(rs, prefix + "_date"));
+		price.setValue(getDouble(rs, prefix + "_value"));
+		return price;
 	}
 
 	protected Portfolio mapPortfolio(ResultSet rs, String prefix) throws SQLException {
 		Portfolio portfolio = new Portfolio();
 		portfolio.setId(getLong(rs, prefix + "_id"));
 		portfolio.setName(getString(rs, prefix + "_name"));
-		portfolio.setStartDate(getDate(rs, prefix + "_start_date"));
+		portfolio.setStartDate(getDate(rs, prefix + "_date_start"));
 		return portfolio;
 	}
 

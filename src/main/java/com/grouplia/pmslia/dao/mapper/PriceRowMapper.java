@@ -11,9 +11,7 @@ public class PriceRowMapper extends BaseRowMapper implements RowMapper<Price> {
 
 	@Override
 	public Price mapRow(ResultSet rs, int rowNum) throws SQLException {
-		Price price = new Price();
-		price.setDate(getDate(rs, "f_date"));
-		price.setValue(getDouble(rs, "f_value"));
+		Price price = mapPrice(rs, "price");
 		return price;
 	}
 
