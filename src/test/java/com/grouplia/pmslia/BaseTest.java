@@ -1,9 +1,12 @@
 package com.grouplia.pmslia;
 
+import java.io.File;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.swing.JFileChooser;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +31,20 @@ public abstract class BaseTest {
 		} catch (ParseException ex) {
 			throw new IllegalArgumentException(msg("failed to parse date [{0}] with pattern [{1}]", s, pattern), ex);
 		}
+	}
+
+	protected File chooseFile() {
+		return chooseFile(".");
+	}
+
+	protected File chooseFile(String currentFolder) {
+		JFileChooser chooser = new JFileChooser();
+		chooser.setCurrentDirectory(new File(currentFolder));
+		int returnVal = chooser.showOpenDialog(null);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			return chooser.getSelectedFile();
+		}
+		return null;
 	}
 
 }

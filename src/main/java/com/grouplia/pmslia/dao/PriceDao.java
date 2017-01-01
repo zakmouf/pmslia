@@ -8,8 +8,6 @@ import com.grouplia.pmslia.domain.Stock;
 
 public interface PriceDao {
 
-	Date findLastDate(Stock stock);
-
 	List<Price> find(Stock stock);
 
 	void insert(Stock stock, Price price);
@@ -19,8 +17,6 @@ public interface PriceDao {
 	void delete(Stock stock);
 
 	void delete(Stock stock, Price price);
-	
-	// finders
 
 	List<Price> findFrom(Stock stock, Date fromDate);
 
@@ -29,7 +25,5 @@ public interface PriceDao {
 	List<Price> findBetween(Stock stock, Date fromDate, Date toDate);
 
 	List<Price> findBetweenInclusive(Stock stock, Date fromDate, Date toDate);
-
-	List<Price> loadBetween(Stock stock, Date fromDate, Date toDate);
 
 }

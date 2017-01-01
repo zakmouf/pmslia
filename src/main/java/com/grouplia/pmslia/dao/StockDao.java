@@ -18,8 +18,6 @@ public interface StockDao {
 
 	void delete(Stock stock);
 
-	// relations
-
 	List<Stock> findParents(Stock stock);
 
 	List<Stock> findChildren(Stock stock);

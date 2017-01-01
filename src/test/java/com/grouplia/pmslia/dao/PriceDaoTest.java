@@ -206,32 +206,4 @@ public class PriceDaoTest extends BaseDaoTest {
 
 	}
 
-	@Test
-	@Transactional
-	public void testLoad() {
-
-		String ticker = "YHOO";
-		Stock stock = stockDao.findByTicker(ticker);
-		if (stock == null) {
-			stock = new Stock();
-			stock.setTicker(ticker);
-			stockDao.insert(stock);
-		}
-
-		Date fromDate = parseDate("2012-01-01");
-		Date toDate = parseDate("2012-12-31");
-
-		List<Price> prices;
-
-		prices = priceDao.loadBetween(stock, fromDate, fromDate);
-		Assert.assertEquals(prices.size(), 0);
-
-		prices = priceDao.loadBetween(stock, fromDate, toDate);
-		Assert.assertEquals(prices.size(), 250);
-
-		prices = priceDao.loadBetween(stock, toDate, toDate);
-		Assert.assertEquals(prices.size(), 1);
-
-	}
-
 }

@@ -1,4 +1,9 @@
 
+drop table if exists t_portfolio;
+drop table if exists t_price;
+drop table if exists t_stock_relation;
+drop table if exists t_stock;
+
 -- t_stock
 
 drop table if exists t_stock;
@@ -6,7 +11,7 @@ drop table if exists t_stock;
 create table t_stock (
   f_id      bigint unsigned not null,
   f_ticker  varchar (50) not null,
-  f_name    varchar (50)
+  f_name    varchar (255)
 )
 engine = innodb;
 
@@ -50,7 +55,7 @@ drop table if exists t_portfolio;
 
 create table t_portfolio (
   f_id          bigint unsigned not null,
-  f_name        varchar (50) not null,
+  f_name        varchar (255) not null,
   f_date_start  date not null,
   indice_id     bigint unsigned not null
 )
