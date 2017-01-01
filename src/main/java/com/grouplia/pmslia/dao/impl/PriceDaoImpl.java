@@ -28,8 +28,8 @@ import com.grouplia.pmslia.domain.Stock;
 @Repository("priceDao")
 public class PriceDaoImpl extends BaseDaoImpl implements PriceDao {
 
-	private String findLastDateSql = "select max(f_date) from t_price where stock_id = ?";
-	private String findSql = "select p.price_date, p.price_value from v_price p where p.stock_id = ?";
+	private String findLastDateSql = "select max (f_date) from t_price where stock_id = ?";
+	private String findSql = "select p.* from t_price p where p.stock_id = ?";
 	private String insertSql = "insert into t_price (stock_id, f_date, f_value) values (?, ?, ?)";
 	private String deleteSql = "delete from t_price where stock_id = ?";
 	private String deletePriceSql = "delete from t_price where stock_id = ? and f_date = ?";
@@ -190,7 +190,7 @@ public class PriceDaoImpl extends BaseDaoImpl implements PriceDao {
 	public List<Price> loadBetween(Stock stock, Date fromDate, Date toDate) {
 
 		Assert.notNull(stock);
-		Assert.notNull(stock.getName());
+		Assert.notNull(stock.getTicker());
 		Assert.notNull(fromDate);
 		Assert.notNull(toDate);
 		Assert.isTrue(fromDate.compareTo(toDate) <= 0);
@@ -199,7 +199,7 @@ public class PriceDaoImpl extends BaseDaoImpl implements PriceDao {
 		fromCalendar.setTime(fromDate);
 		Calendar toCalendar = Calendar.getInstance();
 		toCalendar.setTime(toDate);
-		String url = msg(loadUrlPattern, stock.getName(), fromCalendar.get(Calendar.MONTH),
+		String url = msg(loadUrlPattern, stock.getTicker(), fromCalendar.get(Calendar.MONTH),
 				fromCalendar.get(Calendar.DATE), fromCalendar.get(Calendar.YEAR), toCalendar.get(Calendar.MONTH),
 				toCalendar.get(Calendar.DATE), toCalendar.get(Calendar.YEAR));
 

@@ -12,7 +12,7 @@ public class PortfolioRowMapper extends BaseRowMapper implements RowMapper<Portf
 	@Override
 	public Portfolio mapRow(ResultSet rs, int rowNum) throws SQLException {
 		Portfolio portfolio = mapPortfolio(rs);
-		portfolio.setIndice(mapStock(rs, "indice"));
+		//portfolio.setIndice(mapStock(rs, "indice"));
 		return portfolio;
 	}
 

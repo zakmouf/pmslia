@@ -14,14 +14,14 @@ import com.grouplia.pmslia.domain.Stock;
 @Repository("stockDao")
 public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 
-	private String selectAllQuery = "select s.* from v_stock s";
-	private String selectByIdQuery = "select s.* from v_stock s where s.stock_id = ?";
-	private String selectByTickerQuery = "select s.* from v_stock s where s.stock_ticker = ?";
+	private String selectAllQuery = "select s.* from t_stock s";
+	private String selectByIdQuery = "select s.* from t_stock s where s.f_id = ?";
+	private String selectByTickerQuery = "select s.* from t_stock s where s.f_ticker = ?";
 	private String insertQuery = "insert into t_stock (f_id, f_ticker, f_name) values (?, ?, ?)";
 	private String updateQuery = "update t_stock set f_ticker = ?, f_name = ? where f_id = ?";
 	private String deleteQuery = "delete from t_stock where f_id = ?";
-	private String selectParentQuery = "select s.* from v_stock s, t_stock_relation sr where sr.parent_id = s.stock_id and sr.child_id = ?";
-	private String selectChildQuery = "select s.* from v_stock s, t_stock_relation sr where sr.child_id = s.stock_id and sr.parent_id = ?";
+	private String selectParentQuery = "select s.* from t_stock s, t_stock_relation sr where sr.parent_id = s.f_id and sr.child_id = ?";
+	private String selectChildQuery = "select s.* from t_stock s, t_stock_relation sr where sr.child_id = s.f_id and sr.parent_id = ?";
 	private String insertRelationQuery = "insert into t_stock_relation (parent_id, child_id) values (?, ?)";
 	private String deleteRelationQuery = "delete from t_stock_relation where parent_id = ? and child_id = ?";
 
@@ -59,7 +59,7 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 	public void insert(Stock stock) {
 		Assert.notNull(stock);
 		Assert.isNull(stock.getId());
-		Assert.notNull(stock.getName());
+		Assert.notNull(stock.getTicker());
 		stock.setId(getNextId());
 		Object[] args = { stock.getId(), stock.getTicker(), stock.getName() };
 		int[] argTypes = { Types.NUMERIC, Types.VARCHAR, Types.VARCHAR };
@@ -71,7 +71,7 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 	public void update(Stock stock) {
 		Assert.notNull(stock);
 		Assert.notNull(stock.getId());
-		Assert.notNull(stock.getName());
+		Assert.notNull(stock.getTicker());
 		Object[] args = { stock.getTicker(), stock.getName(), stock.getId() };
 		int[] argTypes = { Types.VARCHAR, Types.VARCHAR, Types.NUMERIC };
 		update(updateQuery, args, argTypes);
