@@ -18,7 +18,7 @@ public class UpdateServiceLoad extends BaseServiceTest {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("classpath:spring/service-test-config.xml");
 		StockDao stockDao = (StockDao) ctx.getBean("stockDao");
 		UpdateService updateService = (UpdateService) ctx.getBean("updateService");
-		Stock stock = stockDao.findByTicker("^GDAXI");
+		Stock stock = stockDao.findStockByTicker("^GDAXI");
 		Assert.assertTrue(stock != null);
 		List<Stock> stocks = stockDao.findChildren(stock);
 		stocks.add(stock);

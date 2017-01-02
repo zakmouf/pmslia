@@ -21,14 +21,14 @@ public class StockServiceImpl extends BaseServiceImpl implements StockService {
 	@Transactional
 	public void create(Stock parent, List<Stock> children) {
 
-		Stock existingParent = stockDao.findByTicker(parent.getTicker());
+		Stock existingParent = stockDao.findStockByTicker(parent.getTicker());
 		if (existingParent != null) {
 			parent.setId(existingParent.getId());
 			logger.info(msg("update stock [{0}]", parent));
-			stockDao.update(parent);
+			stockDao.updateStock(parent);
 		} else {
 			logger.info(msg("add stock [{0}]", parent));
-			stockDao.insert(parent);
+			stockDao.insertStock(parent);
 		}
 
 		List<Stock> existingChildren = stockDao.findChildren(parent);
@@ -38,14 +38,14 @@ public class StockServiceImpl extends BaseServiceImpl implements StockService {
 		}
 
 		for (Stock child : children) {
-			Stock existingChild = stockDao.findByTicker(child.getTicker());
+			Stock existingChild = stockDao.findStockByTicker(child.getTicker());
 			if (existingChild != null) {
 				child.setId(existingChild.getId());
 				logger.info(msg("update stock [{0}]", child));
-				stockDao.update(child);
+				stockDao.updateStock(child);
 			} else {
 				logger.info(msg("add stock [{0}]", child));
-				stockDao.insert(child);
+				stockDao.insertStock(child);
 			}
 			logger.info(msg("add child [{0}] to parent [{1}]", child, parent));
 			stockDao.insertRelation(parent, child);

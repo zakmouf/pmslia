@@ -14,12 +14,8 @@ import com.grouplia.pmslia.domain.Portfolio;
 @Repository("profolioDao")
 public class PortfolioDaoImpl extends BaseDaoImpl implements PortfolioDao {
 
-	private String selectColumn = "p.f_id as portfolio_id, p.f_name as portfolio_name, p.f_date_start as portfolio_date_start, "
-			+ "i.f_id as indice_id, i.f_ticker as indice_ticker, i.f_name as indice_name";
-	private String selectAllQuery = "select " + selectColumn
-			+ " from t_portfolio p join t_stock i on i.f_id = p.indice_id";
-	private String selectByIdQuery = "select " + selectColumn
-			+ " from t_portfolio p join t_stock i on i.f_id = p.indice_id where p.f_id = ?";
+	private String selectAllQuery = "select p.* from v_portfolio p";
+	private String selectByIdQuery = "select p.* from v_portfolio p where p.portfolio_id = ?";
 	private String insertQuery = "insert into t_portfolio (f_id, f_name, f_date_start, indice_id) values (?, ?, ?, ?)";
 	private String updateQuery = "update t_portfolio set f_name = ?, f_date_start = ?, indice_id = ? where f_id = ?";
 	private String deleteQuery = "delete from t_portfolio where f_id = ?";

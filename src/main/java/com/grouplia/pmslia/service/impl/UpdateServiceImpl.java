@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-import com.grouplia.pmslia.dao.PriceDao;
 import com.grouplia.pmslia.dao.StockDao;
 import com.grouplia.pmslia.domain.Price;
 import com.grouplia.pmslia.domain.Stock;
@@ -47,9 +46,6 @@ public class UpdateServiceImpl extends BaseServiceImpl implements UpdateService 
 	@Resource
 	private StockDao stockDao;
 
-	@Resource
-	private PriceDao priceDao;
-
 	@Override
 	@Transactional
 	public void updateNames(List<Stock> stocks) {
@@ -61,7 +57,7 @@ public class UpdateServiceImpl extends BaseServiceImpl implements UpdateService 
 				name = lines.get(0);
 				name = StringUtils.replace(name, "\"", "");
 				stock.setName(name);
-				stockDao.update(stock);
+				stockDao.updateStock(stock);
 			}
 		}
 	}
@@ -80,27 +76,28 @@ public class UpdateServiceImpl extends BaseServiceImpl implements UpdateService 
 			// from_date = last_date + 1
 
 			Date fromDate = priceStartDate;
-			List<Price> prices = priceDao.find(stock);
-			if (!prices.isEmpty()) {
-				Price price = prices.get(prices.size() - 1);
-				Date lastDate = price.getDate();
-				fromDate = DateUtils.addDays(lastDate, 1);
+			Price lastPrice = stockDao.findLastPrice(stock);
+			if (lastPrice != null) {
+				fromDate = DateUtils.addDays(lastPrice.getDate(), 1);
 			}
 
-			prices = new ArrayList<Price>();
+			List<Price> prices = new ArrayList<Price>();
 
 			Date fromDate2 = fromDate;
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(fromDate2);
 
 			while (fromDate2.compareTo(toDate) <= 0) {
+
 				calendar.add(Calendar.DATE, priceIncrement);
 				Date toDate2 = calendar.getTime();
 				if (toDate2.compareTo(toDate) > 0) {
 					toDate2 = toDate;
 				}
+
 				List<Price> prices2 = loadPrices(stock, fromDate2, toDate2);
 				prices.addAll(prices2);
+
 				logger.debug(
 						msg("update stock=[{0}] from=[{1,date,yyyy-MM-dd}] to=[{2,date,yyyy-MM-dd}] : prices=[{3,number,0}]",
 								stock.getTicker(), fromDate2, toDate2, prices2.size()));
@@ -110,7 +107,7 @@ public class UpdateServiceImpl extends BaseServiceImpl implements UpdateService 
 
 			}
 
-			priceDao.insert(stock, prices);
+			stockDao.insertPrices(stock, prices);
 
 			logger.info(
 					msg("update stock=[{0}] from=[{1,date,yyyy-MM-dd}] to=[{2,date,yyyy-MM-dd}] : prices=[{3,number,0}]",

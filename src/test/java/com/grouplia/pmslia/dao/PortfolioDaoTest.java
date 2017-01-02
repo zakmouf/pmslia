@@ -30,7 +30,7 @@ public class PortfolioDaoTest extends BaseDaoTest {
 	public void testDao() {
 
 		Stock indice = new Stock("iticker");
-		stockDao.insert(indice);
+		stockDao.insertStock(indice);
 
 		//Stock stock = new Stock("sticker");
 		//stockDao.insert(stock);

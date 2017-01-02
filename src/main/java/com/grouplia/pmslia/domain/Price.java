@@ -45,7 +45,7 @@ public class Price extends BaseObject implements Comparable<Price> {
 
 	@Override
 	public boolean equals(Object other) {
-		return date.equals(((Price) other).getDate());
+		return date.equals(((Price) other).getDate()) && value.equals(((Price) other).getValue());
 	}
 
 	@Override

@@ -13,9 +13,9 @@ FROM   t_price p;
 CREATE OR REPLACE VIEW v_stock_price
 AS
 SELECT   p.stock_id,
-         count(1) AS stock_date_count,
-         min(p.price_date) AS stock_first_date,
-         max(p.price_date) AS stock_last_date
+         count(1) AS date_count,
+         min(p.price_date) AS date_first,
+         max(p.price_date) AS date_last
 FROM     v_price p
 GROUP BY p.stock_id;
 
@@ -24,11 +24,11 @@ GROUP BY p.stock_id;
 CREATE OR REPLACE VIEW v_stock
 AS
 SELECT  s.f_id AS stock_id,
+        s.f_ticker AS stock_ticker,
         s.f_name AS stock_name,
-        s.f_description AS stock_description,
-        p.stock_date_count,
-        p.stock_first_date,
-        p.stock_last_date
+        p.date_count as stock_date_count,
+        p.date_first as stock_date_first,
+        p.date_last as stock_date_last
 FROM    t_stock s
         LEFT JOIN v_stock_price p ON p.stock_id = s.f_id;
 
@@ -38,13 +38,13 @@ CREATE OR REPLACE VIEW v_portfolio
 AS
 SELECT p.f_id AS portfolio_id,
        p.f_name AS portfolio_name,
-       p.f_start_date AS portfolio_start_date,
+       p.f_date_start AS portfolio_date_start,
        i.stock_id AS indice_id,
+       i.stock_ticker AS indice_ticker,
        i.stock_name AS indice_name,
-       i.stock_description AS indice_description,
        i.stock_date_count AS indice_date_count,
-       i.stock_first_date AS indice_first_date,
-       i.stock_last_date AS indice_last_date
+       i.stock_date_first AS indice_date_first,
+       i.stock_date_last AS indice_date_last
 FROM   t_portfolio p
        JOIN v_stock i ON i.stock_id = p.indice_id;
 

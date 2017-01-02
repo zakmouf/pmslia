@@ -11,7 +11,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.grouplia.pmslia.dao.PriceDao;
 import com.grouplia.pmslia.dao.StockDao;
 import com.grouplia.pmslia.domain.Price;
 import com.grouplia.pmslia.domain.Stock;
@@ -24,9 +23,6 @@ public class UpdateServiceTest extends BaseServiceTest {
 	private StockDao stockDao;
 
 	@Resource
-	private PriceDao priceDao;
-
-	@Resource
 	private UpdateService updateService;
 
 	@Test
@@ -34,10 +30,10 @@ public class UpdateServiceTest extends BaseServiceTest {
 	public void testName() {
 
 		String ticker = "YHOO";
-		Stock stock = stockDao.findByTicker(ticker);
+		Stock stock = stockDao.findStockByTicker(ticker);
 		if (stock == null) {
 			stock = new Stock(ticker);
-			stockDao.insert(stock);
+			stockDao.insertStock(stock);
 		}
 
 		List<Stock> stocks = new ArrayList<Stock>();
@@ -49,15 +45,15 @@ public class UpdateServiceTest extends BaseServiceTest {
 
 	@Test
 	@Transactional
-	public void testPriceWithoutLast() {
+	public void testPriceWoutLast() {
 
 		String ticker = "YHOO";
-		Stock stock = stockDao.findByTicker(ticker);
+		Stock stock = stockDao.findStockByTicker(ticker);
 		if (stock == null) {
 			stock = new Stock(ticker);
-			stockDao.insert(stock);
+			stockDao.insertStock(stock);
 		}
-		priceDao.delete(stock);
+		stockDao.deletePrices(stock);
 
 		List<Stock> stocks = new ArrayList<Stock>();
 		stocks.add(stock);
@@ -71,15 +67,15 @@ public class UpdateServiceTest extends BaseServiceTest {
 	public void testPriceWithLast() {
 
 		String ticker = "YHOO";
-		Stock stock = stockDao.findByTicker(ticker);
+		Stock stock = stockDao.findStockByTicker(ticker);
 		if (stock == null) {
 			stock = new Stock(ticker);
-			stockDao.insert(stock);
+			stockDao.insertStock(stock);
 		}
-		priceDao.delete(stock);
+		stockDao.deletePrices(stock);
 
 		Price price = new Price(parseDate("2013-01-01"), 123.45D);
-		priceDao.insert(stock, price);
+		stockDao.insertPrice(stock, price);
 
 		List<Stock> stocks = new ArrayList<Stock>();
 		stocks.add(stock);

@@ -15,6 +15,9 @@ public abstract class BaseRowMapper {
 		stock.setId(getLong(rs, prefix + "_id"));
 		stock.setTicker(getString(rs, prefix + "_ticker"));
 		stock.setName(getString(rs, prefix + "_name"));
+		stock.setDateCount(getInteger(rs, prefix + "_date_count"));
+		stock.setFirstDate(getDate(rs, prefix + "_date_first"));
+		stock.setLastDate(getDate(rs, prefix + "_date_last"));
 		return stock;
 	}
 
