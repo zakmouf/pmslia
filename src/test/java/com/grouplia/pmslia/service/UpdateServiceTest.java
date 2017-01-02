@@ -31,7 +31,25 @@ public class UpdateServiceTest extends BaseServiceTest {
 
 	@Test
 	@Transactional
-	public void testServiceWithoutLast() {
+	public void testName() {
+
+		String ticker = "YHOO";
+		Stock stock = stockDao.findByTicker(ticker);
+		if (stock == null) {
+			stock = new Stock(ticker);
+			stockDao.insert(stock);
+		}
+
+		List<Stock> stocks = new ArrayList<Stock>();
+		stocks.add(stock);
+
+		updateService.updateNames(stocks);
+
+	}
+
+	@Test
+	@Transactional
+	public void testPriceWithoutLast() {
 
 		String ticker = "YHOO";
 		Stock stock = stockDao.findByTicker(ticker);
@@ -44,13 +62,13 @@ public class UpdateServiceTest extends BaseServiceTest {
 		List<Stock> stocks = new ArrayList<Stock>();
 		stocks.add(stock);
 
-		updateService.update(stocks);
+		updateService.updatePrices(stocks);
 
 	}
 
 	@Test
 	@Transactional
-	public void testServiceWithLast() {
+	public void testPriceWithLast() {
 
 		String ticker = "YHOO";
 		Stock stock = stockDao.findByTicker(ticker);
@@ -66,7 +84,7 @@ public class UpdateServiceTest extends BaseServiceTest {
 		List<Stock> stocks = new ArrayList<Stock>();
 		stocks.add(stock);
 
-		updateService.update(stocks);
+		updateService.updatePrices(stocks);
 
 	}
 

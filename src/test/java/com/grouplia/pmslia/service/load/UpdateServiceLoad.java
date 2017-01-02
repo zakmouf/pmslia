@@ -22,7 +22,8 @@ public class UpdateServiceLoad extends BaseServiceTest {
 		Assert.assertTrue(stock != null);
 		List<Stock> stocks = stockDao.findChildren(stock);
 		stocks.add(stock);
-		updateService.update(stocks);
+		updateService.updateNames(stocks);
+		updateService.updatePrices(stocks);
 	}
 
 }

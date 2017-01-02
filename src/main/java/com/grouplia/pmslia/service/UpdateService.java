@@ -6,6 +6,9 @@ import com.grouplia.pmslia.domain.Stock;
 
 public interface UpdateService {
 
-	void update(List<Stock> stocks);
+	
+	void updateNames(List<Stock> stocks);
+	
+	void updatePrices(List<Stock> stocks);
 
 }
