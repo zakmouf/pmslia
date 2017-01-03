@@ -44,7 +44,7 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		int[] argTypes = {};
 		List<Stock> stocks = queryForList(selectStocksSql, args, argTypes, new StockRowMapper());
 		Collections.sort(stocks);
-		logger.debug(msg("find stocks : stocks=[{0,number,0}]", stocks.size()));
+		logger.debug(msg("find stocks : [{0,number,0}]", stocks.size()));
 		return stocks;
 	}
 
@@ -76,8 +76,8 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		stock.setId(getNextId());
 		Object[] args = { stock.getId(), stock.getTicker(), stock.getName() };
 		int[] argTypes = { Types.NUMERIC, Types.VARCHAR, Types.VARCHAR };
-		insert(insertStockSql, args, argTypes);
-		logger.debug(msg("insert stock=[{0}]", stock));
+		int insert = insert(insertStockSql, args, argTypes);
+		logger.debug(msg("insert stock=[{0}] : [{1,number,0}]", stock, insert));
 	}
 
 	@Override
@@ -87,8 +87,8 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		Assert.notNull(stock.getTicker());
 		Object[] args = { stock.getTicker(), stock.getName(), stock.getId() };
 		int[] argTypes = { Types.VARCHAR, Types.VARCHAR, Types.NUMERIC };
-		update(updateStockSql, args, argTypes);
-		logger.debug(msg("update stock=[{0}]", stock));
+		int update = update(updateStockSql, args, argTypes);
+		logger.debug(msg("update stock=[{0}] : [{1,number,0}]", stock, update));
 	}
 
 	@Override
@@ -97,8 +97,8 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		Assert.notNull(stock.getId());
 		Object[] args = { stock.getId() };
 		int[] argTypes = { Types.NUMERIC };
-		delete(deleteStockSql, args, argTypes);
-		logger.debug(msg("delete stock=[{0}]", stock));
+		int delete = delete(deleteStockSql, args, argTypes);
+		logger.debug(msg("delete stock=[{0}] : [{1,number,0}]", stock, delete));
 	}
 
 	@Override
@@ -109,7 +109,7 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		int[] argTypes = { Types.NUMERIC };
 		List<Stock> stocks = queryForList(selectParentQuery, args, argTypes, new StockRowMapper());
 		Collections.sort(stocks);
-		logger.debug(msg("find parents for stock=[{0}] : parents=[{1,number,0}] ", stock, stocks.size()));
+		logger.debug(msg("find parents for stock=[{0}] : [{1,number,0}] ", stock, stocks.size()));
 		return stocks;
 	}
 
@@ -121,7 +121,7 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		int[] argTypes = { Types.NUMERIC };
 		List<Stock> stocks = queryForList(selectChildQuery, args, argTypes, new StockRowMapper());
 		Collections.sort(stocks);
-		logger.debug(msg("find children for stock=[{0}] : children=[{1,number,0}]", stock, stocks.size()));
+		logger.debug(msg("find children for stock=[{0}] : [{1,number,0}]", stock, stocks.size()));
 		return stocks;
 	}
 
@@ -133,8 +133,8 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		Assert.notNull(child.getId());
 		Object[] args = { parent.getId(), child.getId() };
 		int[] argTypes = { Types.NUMERIC, Types.NUMERIC };
-		insert(insertRelationQuery, args, argTypes);
-		logger.debug(msg("insert relation parent=[{0}] child=[{1}]", parent, child));
+		int insert = insert(insertRelationQuery, args, argTypes);
+		logger.debug(msg("insert relation parent=[{0}] child=[{1}] : [{2,number,0}]", parent, child, insert));
 	}
 
 	@Override
@@ -145,8 +145,8 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		Assert.notNull(child.getId());
 		Object[] args = { parent.getId(), child.getId() };
 		int[] argTypes = { Types.NUMERIC, Types.NUMERIC };
-		delete(deleteRelationQuery, args, argTypes);
-		logger.debug(msg("delete relation parent=[{0}] child=[{1}]", parent, child));
+		int delete = delete(deleteRelationQuery, args, argTypes);
+		logger.debug(msg("delete relation parent=[{0}] child=[{1}] : [{2,number,0}]", parent, child, delete));
 	}
 
 	@Override
@@ -168,7 +168,7 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		int[] argTypes = { Types.NUMERIC };
 		List<Price> prices = queryForList(selectPriceSql, args, argTypes, new PriceRowMapper());
 		Collections.sort(prices);
-		logger.debug(msg("find prices for stock=[{0}] : prices=[{1,number,0}]", stock, prices.size()));
+		logger.debug(msg("find prices for stock=[{0}] : [{1,number,0}]", stock, prices.size()));
 		return prices;
 	}
 
@@ -267,7 +267,8 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		Assert.notNull(price.getValue());
 		Object[] args = { stock.getId(), price.getDate(), price.getValue() };
 		int[] argTypes = { Types.NUMERIC, Types.DATE, Types.NUMERIC };
-		insert(insertPriceSql, args, argTypes);
+		int insert = insert(insertPriceSql, args, argTypes);
+		logger.debug(msg("insert price=[{0}] for stock=[{1}] : [{2,number,0}]", price, stock, insert));
 	}
 
 	@Override
@@ -288,7 +289,8 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		Assert.notNull(price.getDate());
 		Object[] args = { stock.getId(), price.getDate() };
 		int[] argTypes = { Types.NUMERIC, Types.DATE };
-		delete(deletePriceSql, args, argTypes);
+		int delete = delete(deletePriceSql, args, argTypes);
+		logger.debug(msg("delete price=[{0}] for stock=[{1}] : [{2,number,0}]", price, stock, delete));
 	}
 
 	@Override
@@ -297,7 +299,8 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		Assert.notNull(stock.getId());
 		Object[] args = { stock.getId() };
 		int[] argTypes = { Types.NUMERIC };
-		delete(deletePricesSql, args, argTypes);
+		int delete = delete(deletePricesSql, args, argTypes);
+		logger.debug(msg("delete prices for stock=[{0}] : [{1,number,0}]", stock, delete));
 	}
 
 }

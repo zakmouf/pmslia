@@ -27,29 +27,84 @@ public class PortfolioDaoTest extends BaseDaoTest {
 
 	@Test
 	@Transactional
-	public void testDao() {
+	public void testPortfolio() {
 
 		Stock indice = new Stock("iticker");
 		stockDao.insertStock(indice);
 
-		//Stock stock = new Stock("sticker");
-		//stockDao.insert(stock);
-		//Holding holding = new Holding(123.45D, stock);
-
 		Portfolio portfolio = new Portfolio("pname", parseDate("2012-01-01"), indice);
-		//portfolio.getHoldings().add(holding);
 
-		portfolioDao.insert(portfolio);
+		Assert.assertNull(portfolio.getId());
+		portfolioDao.insertPortfolio(portfolio);
 		Assert.assertNotNull(portfolio.getId());
 
-		portfolio = portfolioDao.findById(portfolio.getId());
+		portfolio = portfolioDao.findPortfolioById(portfolio.getId());
 		Assert.assertNotNull(portfolio);
 
-		List<Portfolio> portfolios = portfolioDao.findAll();
+		List<Portfolio> portfolios = portfolioDao.findPortfolios();
 		Assert.assertTrue(portfolios.contains(portfolio));
 
-		portfolioDao.delete(portfolio);
-		Assert.assertNull(portfolioDao.findById(portfolio.getId()));
+		portfolioDao.deletePortfolio(portfolio);
+		Assert.assertNull(portfolioDao.findPortfolioById(portfolio.getId()));
+
+	}
+
+	@Test
+	@Transactional
+	public void testHolding() {
+
+		Stock indice = new Stock("iticker");
+		stockDao.insertStock(indice);
+		Portfolio portfolio = new Portfolio("pname", parseDate("2012-01-01"), indice);
+		portfolioDao.insertPortfolio(portfolio);
+
+		Stock stock1 = new Stock("sticker1");
+		stockDao.insertStock(stock1);
+		Stock stock2 = new Stock("sticker2");
+		stockDao.insertStock(stock2);
+		Holding holding1 = new Holding(1.0D, stock1);
+		Holding holding2 = new Holding(1.0D, stock2);
+
+		List<Holding> holdings;
+
+		holdings = portfolioDao.findHoldings(portfolio);
+		Assert.assertTrue(holdings.isEmpty());
+
+		portfolioDao.insertHolding(portfolio, holding1);
+		holdings = portfolioDao.findHoldings(portfolio);
+		Assert.assertEquals(holdings.size(), 1);
+		Assert.assertTrue(holdings.contains(holding1));
+
+		portfolioDao.insertHolding(portfolio, holding2);
+		holdings = portfolioDao.findHoldings(portfolio);
+		Assert.assertEquals(holdings.size(), 2);
+		Assert.assertTrue(holdings.contains(holding1));
+		Assert.assertTrue(holdings.contains(holding2));
+
+		portfolioDao.deleteHolding(portfolio, holding1);
+		holdings = portfolioDao.findHoldings(portfolio);
+		Assert.assertEquals(holdings.size(), 1);
+		Assert.assertTrue(holdings.contains(holding2));
+
+		portfolioDao.deleteHolding(portfolio, holding2);
+		holdings = portfolioDao.findHoldings(portfolio);
+		Assert.assertTrue(holdings.isEmpty());
+
+		portfolioDao.insertHolding(portfolio, holding1);
+		portfolioDao.insertHolding(portfolio, holding2);
+		holdings = portfolioDao.findHoldings(portfolio);
+		Assert.assertEquals(holdings.size(), 2);
+		portfolioDao.deleteHoldings(portfolio);
+		holdings = portfolioDao.findHoldings(portfolio);
+		Assert.assertTrue(holdings.isEmpty());
+
+		portfolioDao.insertHolding(portfolio, holding1);
+		portfolioDao.insertHolding(portfolio, holding2);
+		holdings = portfolioDao.findHoldings(portfolio);
+		Assert.assertEquals(holdings.size(), 2);
+		portfolioDao.deletePortfolio(portfolio);
+		holdings = portfolioDao.findHoldings(portfolio);
+		Assert.assertTrue(holdings.isEmpty());
 
 	}
 

@@ -2,18 +2,29 @@ package com.grouplia.pmslia.dao;
 
 import java.util.List;
 
+import com.grouplia.pmslia.domain.Holding;
 import com.grouplia.pmslia.domain.Portfolio;
 
 public interface PortfolioDao {
 
-	List<Portfolio> findAll();
+	List<Portfolio> findPortfolios();
 
-	Portfolio findById(Long id);
+	Portfolio findPortfolioById(Long id);
 
-	void insert(Portfolio portfolio);
+	void insertPortfolio(Portfolio portfolio);
 
-	void update(Portfolio portfolio);
+	void updatePortfolio(Portfolio portfolio);
 
-	void delete(Portfolio portfolio);
+	void deletePortfolio(Portfolio portfolio);
+
+	List<Holding> findHoldings(Portfolio portfolio);
+
+	void insertHolding(Portfolio portfolio, Holding holding);
+
+	void insertHoldings(Portfolio portfolio, List<Holding> holdings);
+
+	void deleteHolding(Portfolio portfolio, Holding holding);
+
+	void deleteHoldings(Portfolio portfolio);
 
 }

@@ -39,7 +39,7 @@ public class Holding extends BaseObject implements Comparable<Holding> {
 
 	@Override
 	public boolean equals(Object other) {
-		return stock.equals(((Holding) other).getStock());
+		return quantity.equals(((Holding) other).getQuantity()) && stock.equals(((Holding) other).getStock());
 	}
 
 	@Override

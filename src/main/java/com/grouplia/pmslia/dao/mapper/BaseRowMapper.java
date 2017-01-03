@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+import com.grouplia.pmslia.domain.Holding;
 import com.grouplia.pmslia.domain.Portfolio;
 import com.grouplia.pmslia.domain.Price;
 import com.grouplia.pmslia.domain.Stock;
@@ -36,16 +37,11 @@ public abstract class BaseRowMapper {
 		return portfolio;
 	}
 
-	// protected Holding mapHolding(ResultSet rs) throws SQLException {
-	// return mapHolding(rs, "holding");
-	// }
-
-	// protected Holding mapHolding(ResultSet rs, String prefix) throws
-	// SQLException {
-	// Holding holding = new Holding();
-	// holding.setQuantity(getDouble(rs, prefix + "_quantity"));
-	// return holding;
-	// }
+	protected Holding mapHolding(ResultSet rs, String prefix) throws SQLException {
+		Holding holding = new Holding();
+		holding.setQuantity(getDouble(rs, prefix + "_quantity"));
+		return holding;
+	}
 
 	protected Long getLong(ResultSet rs, String columnLabel) throws SQLException {
 		long l = rs.getLong(columnLabel);

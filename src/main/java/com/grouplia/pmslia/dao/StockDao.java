@@ -16,20 +16,6 @@ public interface StockDao {
 
 	Stock findStockByTicker(String ticker);
 
-	// price finders
-
-	Price findLastPrice(Stock stock);
-
-	List<Price> findPrices(Stock stock);
-
-	List<Price> findPricesFrom(Stock stock, Date fromDate);
-
-	List<Price> findPricesFromInclusive(Stock stock, Date fromDate);
-
-	List<Price> findPricesBetween(Stock stock, Date fromDate, Date toDate);
-
-	List<Price> findPricesBetweenInclusive(Stock stock, Date fromDate, Date toDate);
-
 	// stock
 
 	void insertStock(Stock stock);
@@ -48,7 +34,21 @@ public interface StockDao {
 
 	void deleteRelation(Stock parent, Stock child);
 
-	//
+	// price finders
+
+	Price findLastPrice(Stock stock);
+
+	List<Price> findPrices(Stock stock);
+
+	List<Price> findPricesFrom(Stock stock, Date fromDate);
+
+	List<Price> findPricesFromInclusive(Stock stock, Date fromDate);
+
+	List<Price> findPricesBetween(Stock stock, Date fromDate, Date toDate);
+
+	List<Price> findPricesBetweenInclusive(Stock stock, Date fromDate, Date toDate);
+
+	// price
 
 	void insertPrice(Stock stock, Price price);
 
