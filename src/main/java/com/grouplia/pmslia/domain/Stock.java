@@ -63,12 +63,12 @@ public class Stock extends BaseEntity implements Comparable<Stock> {
 	@Override
 	public String toString() {
 		StringBuffer buf = new StringBuffer();
-		buf.append(msg("id={0,number,0}", id));
-		buf.append(msg(",ticker={0}", ticker));
-		buf.append(msg(",name={0}", name));
-		buf.append(msg(",dateCount={0}", dateCount));
-		buf.append(msg(",firstDate={0,date,yyyy-MM-dd}", firstDate));
-		buf.append(msg(",lastDate={0,date,yyyy-MM-dd}", lastDate));
+		buf.append(msg("id=%1$d", id));
+		buf.append(msg(",ticker=%1$s", ticker));
+		buf.append(msg(",name=%1$s", name));
+		buf.append(msg(",dateCount=%1$d", dateCount));
+		buf.append(msg(",firstDate=%1$tF", firstDate));
+		buf.append(msg(",lastDate=%1$tF", lastDate));
 		return buf.toString();
 	}
 

@@ -35,7 +35,7 @@ public class PortfolioDaoImpl extends BaseDaoImpl implements PortfolioDao {
 		int[] argTypes = {};
 		List<Portfolio> portfolios = queryForList(selectPortfoliosSql, args, argTypes, new PortfolioRowMapper());
 		Collections.sort(portfolios);
-		logger.debug(msg("find portfolios : [{0,number,0}]", portfolios.size()));
+		logger.debug(msg("find portfolios : [%1$d]", portfolios.size()));
 		return portfolios;
 	}
 
@@ -45,7 +45,7 @@ public class PortfolioDaoImpl extends BaseDaoImpl implements PortfolioDao {
 		Object[] args = { id };
 		int[] argTypes = { Types.NUMERIC };
 		Portfolio portfolio = queryForObject(selectPortfolioByIdSql, args, argTypes, new PortfolioRowMapper());
-		logger.debug(msg("find portfolio by id=[{0,number,0}] : portfolio=[{1}]", id, portfolio));
+		logger.debug(msg("find portfolio by id=[%1$d] : portfolio=[%2$s]", id, portfolio));
 		return portfolio;
 	}
 
@@ -62,7 +62,7 @@ public class PortfolioDaoImpl extends BaseDaoImpl implements PortfolioDao {
 				portfolio.getIndice().getId() };
 		int[] argTypes = { Types.NUMERIC, Types.VARCHAR, Types.DATE, Types.NUMERIC };
 		int insert = insert(insertPortfolioSql, args, argTypes);
-		logger.debug(msg("insert portfolio=[{0}] : [{1,number,0}]", portfolio, insert));
+		logger.debug(msg("insert portfolio=[%1$s] : [%2$d]", portfolio, insert));
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class PortfolioDaoImpl extends BaseDaoImpl implements PortfolioDao {
 				portfolio.getId() };
 		int[] argTypes = { Types.VARCHAR, Types.DATE, Types.NUMERIC, Types.NUMERIC };
 		int update = update(updatePortfolioSql, args, argTypes);
-		logger.debug(msg("update portfolio=[{0}] : [{1,number,0}]", portfolio, update));
+		logger.debug(msg("update portfolio=[%1$s] : [%2$d]", portfolio, update));
 	}
 
 	@Override
@@ -87,7 +87,7 @@ public class PortfolioDaoImpl extends BaseDaoImpl implements PortfolioDao {
 		Object[] args = { portfolio.getId() };
 		int[] argTypes = { Types.NUMERIC };
 		int delete = delete(deletePortfolioSql, args, argTypes);
-		logger.debug(msg("delete portfolio=[{0}] : [{1,number,0}]", portfolio, delete));
+		logger.debug(msg("delete portfolio=[%1$s] : [%2$d]", portfolio, delete));
 	}
 
 	@Override
@@ -98,7 +98,7 @@ public class PortfolioDaoImpl extends BaseDaoImpl implements PortfolioDao {
 		int[] argTypes = { Types.NUMERIC };
 		List<Holding> holdings = queryForList(selectHoldingSql, args, argTypes, new HoldingRowMapper());
 		Collections.sort(holdings);
-		logger.debug(msg("find holdings for portfolio=[{0}] : [{1,number,0}]", portfolio, holdings.size()));
+		logger.debug(msg("find holdings for portfolio=[%1$s] : [%2$d]", portfolio, holdings.size()));
 		return holdings;
 	}
 
@@ -113,7 +113,7 @@ public class PortfolioDaoImpl extends BaseDaoImpl implements PortfolioDao {
 		Object[] args = { portfolio.getId(), holding.getQuantity(), holding.getStock().getId() };
 		int[] argTypes = { Types.NUMERIC, Types.NUMERIC, Types.NUMERIC };
 		int insert = insert(insertHoldingSql, args, argTypes);
-		logger.debug(msg("insert holding=[{0}] for portfolio=[{1}] : [{2,number,0}]", holding, portfolio, insert));
+		logger.debug(msg("insert holding=[%1$s] for portfolio=[%2$s] : [%3$d]", holding, portfolio, insert));
 	}
 
 	@Override
@@ -134,7 +134,7 @@ public class PortfolioDaoImpl extends BaseDaoImpl implements PortfolioDao {
 		Object[] args = { portfolio.getId(), holding.getStock().getId() };
 		int[] argTypes = { Types.NUMERIC, Types.NUMERIC };
 		int delete = delete(deleteHoldingSql, args, argTypes);
-		logger.debug(msg("delete holding=[{0}] for portfolio=[{1}] : [{2,number,0}]", holding, portfolio, delete));
+		logger.debug(msg("delete holding=[%1$s] for portfolio=[%2$s] : [%3$d]", holding, portfolio, delete));
 	}
 
 	@Override
@@ -144,7 +144,7 @@ public class PortfolioDaoImpl extends BaseDaoImpl implements PortfolioDao {
 		Object[] args = { portfolio.getId() };
 		int[] argTypes = { Types.NUMERIC };
 		int delete = delete(deleteHoldingsSql, args, argTypes);
-		logger.debug(msg("delete holdings for portfolio=[{0}] : [{1,number,0}]", portfolio, delete));
+		logger.debug(msg("delete holdings for portfolio=[%1$s] : [%2$d]", portfolio, delete));
 	}
 
 }

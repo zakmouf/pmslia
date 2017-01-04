@@ -72,13 +72,15 @@ public class RegressionMeasure extends BaseObject {
 
 	@Override
 	public String toString() {
-		return msg(
-				"" //
-						+ "decisionRatio=[{0,number,0.0000%}] " //
-						+ "alpha=[{1,number,0.0000%}] beta=[{2,number,0.0000}] "
-						+ "alphaBear=[{3,number,0.0000%}] betaBear=[{4,number,0.0000}] "
-						+ "alphaBull=[{5,number,0.0000%}] betaBull=[{6,number,0.0000}]",
-				decisionRatio, alpha, beta, alphaBear, betaBear, alphaBull, betaBull);
+		StringBuffer buf = new StringBuffer();
+		buf.append(msg("decisionRatio=%1$.5f%%", decisionRatio * 100.0));
+		buf.append(msg(",alpha=%1$.5f%%", alpha * 100.0));
+		buf.append(msg(",beta=%1$.5f", beta));
+		buf.append(msg(",alphaBear=%1$.5f%%", alphaBear * 100.0));
+		buf.append(msg(",betaBear=%1$.5f", betaBear));
+		buf.append(msg(",alphaBull=%1$.5f%%", alphaBull * 100.0));
+		buf.append(msg(",betaBull=%1$.5f", betaBull));
+		return buf.toString();
 	}
 
 }

@@ -12,10 +12,10 @@ public class Randomizer {
 	private int basketSize;
 	private int elementCount;
 
-	public Randomizer(int _basketSize, int _elementCount) {
-		Assert.isTrue(_basketSize <= _elementCount);
-		basketSize = _basketSize;
-		elementCount = _elementCount;
+	public Randomizer(int basketSize, int elementCount) {
+		Assert.isTrue(basketSize <= elementCount);
+		this.basketSize = basketSize;
+		this.elementCount = elementCount;
 	}
 
 	public int[] nextBasket() {

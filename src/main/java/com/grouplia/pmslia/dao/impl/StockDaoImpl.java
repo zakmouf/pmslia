@@ -44,7 +44,7 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		int[] argTypes = {};
 		List<Stock> stocks = queryForList(selectStocksSql, args, argTypes, new StockRowMapper());
 		Collections.sort(stocks);
-		logger.debug(msg("find stocks : [{0,number,0}]", stocks.size()));
+		logger.debug(msg("find stocks : [%1$d]", stocks.size()));
 		return stocks;
 	}
 
@@ -54,7 +54,7 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		Object[] args = { id };
 		int[] argTypes = { Types.NUMERIC };
 		Stock stock = queryForObject(selectStockByIdSql, args, argTypes, new StockRowMapper());
-		logger.debug(msg("find stock by id=[{0,number,0}] : stock=[{1}]", id, stock));
+		logger.debug(msg("find stock by id=[%1$d] : stock=[%1$s]", id, stock));
 		return stock;
 	}
 
@@ -64,7 +64,7 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		Object[] args = { ticker };
 		int[] argTypes = { Types.VARCHAR };
 		Stock stock = queryForObject(selectStockByTickerSql, args, argTypes, new StockRowMapper());
-		logger.debug(msg("find stock by ticker=[{0}] : stock=[{1}]", ticker, stock));
+		logger.debug(msg("find stock by ticker=[%1$s] : stock=[%2$s]", ticker, stock));
 		return stock;
 	}
 
@@ -77,7 +77,7 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		Object[] args = { stock.getId(), stock.getTicker(), stock.getName() };
 		int[] argTypes = { Types.NUMERIC, Types.VARCHAR, Types.VARCHAR };
 		int insert = insert(insertStockSql, args, argTypes);
-		logger.debug(msg("insert stock=[{0}] : [{1,number,0}]", stock, insert));
+		logger.debug(msg("insert stock=[%1$s] : [%2$d]", stock, insert));
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		Object[] args = { stock.getTicker(), stock.getName(), stock.getId() };
 		int[] argTypes = { Types.VARCHAR, Types.VARCHAR, Types.NUMERIC };
 		int update = update(updateStockSql, args, argTypes);
-		logger.debug(msg("update stock=[{0}] : [{1,number,0}]", stock, update));
+		logger.debug(msg("update stock=[%1$s] : [%2$d]", stock, update));
 	}
 
 	@Override
@@ -98,7 +98,7 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		Object[] args = { stock.getId() };
 		int[] argTypes = { Types.NUMERIC };
 		int delete = delete(deleteStockSql, args, argTypes);
-		logger.debug(msg("delete stock=[{0}] : [{1,number,0}]", stock, delete));
+		logger.debug(msg("delete stock=[%1$s] : [%2$d]", stock, delete));
 	}
 
 	@Override
@@ -109,7 +109,7 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		int[] argTypes = { Types.NUMERIC };
 		List<Stock> stocks = queryForList(selectParentQuery, args, argTypes, new StockRowMapper());
 		Collections.sort(stocks);
-		logger.debug(msg("find parents for stock=[{0}] : [{1,number,0}] ", stock, stocks.size()));
+		logger.debug(msg("find parents for stock=[%1$s] : [%2$d] ", stock, stocks.size()));
 		return stocks;
 	}
 
@@ -121,7 +121,7 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		int[] argTypes = { Types.NUMERIC };
 		List<Stock> stocks = queryForList(selectChildQuery, args, argTypes, new StockRowMapper());
 		Collections.sort(stocks);
-		logger.debug(msg("find children for stock=[{0}] : [{1,number,0}]", stock, stocks.size()));
+		logger.debug(msg("find children for stock=[%1$s] : [%2$d]", stock, stocks.size()));
 		return stocks;
 	}
 
@@ -134,7 +134,7 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		Object[] args = { parent.getId(), child.getId() };
 		int[] argTypes = { Types.NUMERIC, Types.NUMERIC };
 		int insert = insert(insertRelationQuery, args, argTypes);
-		logger.debug(msg("insert relation parent=[{0}] child=[{1}] : [{2,number,0}]", parent, child, insert));
+		logger.debug(msg("insert relation parent=[%1$s] child=[%2$s] : [%3$d]", parent, child, insert));
 	}
 
 	@Override
@@ -146,7 +146,7 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		Object[] args = { parent.getId(), child.getId() };
 		int[] argTypes = { Types.NUMERIC, Types.NUMERIC };
 		int delete = delete(deleteRelationQuery, args, argTypes);
-		logger.debug(msg("delete relation parent=[{0}] child=[{1}] : [{2,number,0}]", parent, child, delete));
+		logger.debug(msg("delete relation parent=[%1$s] child=[%2$s] : [%3$d]", parent, child, delete));
 	}
 
 	@Override
@@ -156,7 +156,7 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		Object[] args = { stock.getId(), stock.getId() };
 		int[] argTypes = { Types.NUMERIC, Types.NUMERIC };
 		Price price = queryForObject(selectLastPriceSql, args, argTypes, new PriceRowMapper());
-		logger.debug(msg("find last price for stock=[{0}] : price=[{1}]", stock, price));
+		logger.debug(msg("find last price for stock=[%1$s] : price=[%2$s]", stock, price));
 		return price;
 	}
 
@@ -168,7 +168,7 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		int[] argTypes = { Types.NUMERIC };
 		List<Price> prices = queryForList(selectPriceSql, args, argTypes, new PriceRowMapper());
 		Collections.sort(prices);
-		logger.debug(msg("find prices for stock=[{0}] : [{1,number,0}]", stock, prices.size()));
+		logger.debug(msg("find prices for stock=[%1$s] : [%2$d]", stock, prices.size()));
 		return prices;
 	}
 
@@ -268,7 +268,7 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		Object[] args = { stock.getId(), price.getDate(), price.getValue() };
 		int[] argTypes = { Types.NUMERIC, Types.DATE, Types.NUMERIC };
 		int insert = insert(insertPriceSql, args, argTypes);
-		logger.debug(msg("insert price=[{0}] for stock=[{1}] : [{2,number,0}]", price, stock, insert));
+		logger.debug(msg("insert price=[%1$s] for stock=[%2$s] : [%3$d]", price, stock, insert));
 	}
 
 	@Override
@@ -290,7 +290,7 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		Object[] args = { stock.getId(), price.getDate() };
 		int[] argTypes = { Types.NUMERIC, Types.DATE };
 		int delete = delete(deletePriceSql, args, argTypes);
-		logger.debug(msg("delete price=[{0}] for stock=[{1}] : [{2,number,0}]", price, stock, delete));
+		logger.debug(msg("delete price=[%1$s] for stock=[%2$s] : [%3$d]", price, stock, delete));
 	}
 
 	@Override
@@ -300,7 +300,7 @@ public class StockDaoImpl extends BaseDaoImpl implements StockDao {
 		Object[] args = { stock.getId() };
 		int[] argTypes = { Types.NUMERIC };
 		int delete = delete(deletePricesSql, args, argTypes);
-		logger.debug(msg("delete prices for stock=[{0}] : [{1,number,0}]", stock, delete));
+		logger.debug(msg("delete prices for stock=[%1$s] : [%2$d]", stock, delete));
 	}
 
 }

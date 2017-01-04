@@ -36,12 +36,12 @@ public class CombinedMeasure extends BaseObject {
 
 	@Override
 	public String toString() {
-		return msg(
-				"" //
-						+ "\n  portfolio=[{0}]"//
-						+ "\n  indice=[{1}]" //
-						+ "\n  regression=[{2}]\n"//
-				, portfolioMeasure, indiceMeasure, regressionMeasure);
+		StringBuffer buf = new StringBuffer();
+		buf.append(msg("\n  portfolio=[%1]", portfolioMeasure));
+		buf.append(msg("\n  indice=[%1]", indiceMeasure));
+		buf.append(msg("\n  regression=[%1]", regressionMeasure));
+		buf.append(msg("\n"));
+		return buf.toString();
 	}
 
 }

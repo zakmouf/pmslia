@@ -12,6 +12,10 @@
 	<logger name="com.grouplia.pmslia">
 		<level value="debug" />
 	</logger>
+	
+<!-- 	<logger name="com.grouplia.pmslia.dao"> -->
+<!-- 		<level value="info" /> -->
+<!-- 	</logger> -->
 
 	<root>
 		<priority value="info" />

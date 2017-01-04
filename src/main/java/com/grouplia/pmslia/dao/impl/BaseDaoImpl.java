@@ -1,6 +1,5 @@
 package com.grouplia.pmslia.dao.impl;
 
-import java.text.MessageFormat;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -17,11 +16,7 @@ public abstract class BaseDaoImpl {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	protected String msg(String pattern, Object... arguments) {
-		return MessageFormat.format(pattern, arguments);
-	}
-
-	public BaseDaoImpl() {
-		logger.debug(msg("instantiate {0}", getClass()));
+		return String.format(pattern, arguments);
 	}
 
 	@Resource

@@ -46,7 +46,12 @@ public class Portfolio extends BaseEntity implements Comparable<Portfolio> {
 
 	@Override
 	public String toString() {
-		return msg("id={0,number,0},name={1},startDate={2,date,yyyy-MM-dd},indice=[{3}]", id, name, startDate, indice);
+		StringBuffer buf = new StringBuffer();
+		buf.append(msg("id=%1$d", id));
+		buf.append(msg(",name=%1$s", name));
+		buf.append(msg(",startDate=%1$tF", startDate));
+		buf.append(msg(",indice=[%1$s]", indice));
+		return buf.toString();
 	}
 
 	@Override

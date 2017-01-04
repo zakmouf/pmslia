@@ -36,12 +36,11 @@ public class StandardMeasure extends BaseObject {
 
 	@Override
 	public String toString() {
-		return msg(
-				"" //
-						+ "averageReturn=[{0,number,0.0000%}] " //
-						+ "standardDeviation=[{1,number,0.0000%}] " //
-						+ "sharpRatio=[{2,number,0.0000}]" //
-				, averageReturn, standardDeviation, sharpRatio);
+		StringBuffer buf = new StringBuffer();
+		buf.append(msg("averageReturn=%1$.5f%%", averageReturn * 100.0));
+		buf.append(msg(",standardDeviation=%1$.5f%%", standardDeviation * 100.0));
+		buf.append(msg(",sharpRatio=%1$.5f", sharpRatio));
+		return buf.toString();
 	}
 
 }

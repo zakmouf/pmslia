@@ -20,6 +20,10 @@ public abstract class BaseTest {
 	protected String msg(String pattern, Object... arguments) {
 		return MessageFormat.format(pattern, arguments);
 	}
+	
+	protected String msg2(String pattern, Object... arguments) {
+		return String.format(pattern, arguments);
+	}
 
 	protected Date parseDate(String s) {
 		return parseDate(s, DATE_PATTERN);

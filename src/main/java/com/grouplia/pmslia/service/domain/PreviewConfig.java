@@ -18,6 +18,14 @@ public class PreviewConfig extends BaseObject {
 	private Integer basketSize;
 	private Integer portfolioCount;
 
+	public PreviewConfig() {
+		this.riskFreeRate = 0.0;
+		this.minDateCount = 10;
+		this.minStockCount = 10;
+		this.basketSize = 5;
+		this.portfolioCount = 20;
+	}
+
 	public Stock getIndice() {
 		return indice;
 	}

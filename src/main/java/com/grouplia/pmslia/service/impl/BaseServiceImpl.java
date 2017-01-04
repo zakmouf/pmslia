@@ -13,6 +13,10 @@ public abstract class BaseServiceImpl {
 		return MessageFormat.format(pattern, arguments);
 	}
 
+	protected String msg2(String pattern, Object... arguments) {
+		return String.format(pattern, arguments);
+	}
+
 	public BaseServiceImpl() {
 		logger.debug(msg("instantiate {0}", getClass()));
 	}

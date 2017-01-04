@@ -34,7 +34,10 @@ public class Holding extends BaseObject implements Comparable<Holding> {
 
 	@Override
 	public String toString() {
-		return msg("quantity={0,number,0.00},stock=[{1}]", quantity, stock);
+		StringBuffer buf = new StringBuffer();
+		buf.append(msg("quantity=%1$.2f", quantity));
+		buf.append(msg(",stock=[%1$s]", stock));
+		return buf.toString();
 	}
 
 	@Override

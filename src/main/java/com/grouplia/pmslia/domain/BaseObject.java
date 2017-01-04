@@ -1,7 +1,6 @@
 package com.grouplia.pmslia.domain;
 
 import java.io.Serializable;
-import java.text.MessageFormat;
 
 public abstract class BaseObject implements Serializable {
 
@@ -12,7 +11,7 @@ public abstract class BaseObject implements Serializable {
 	}
 
 	protected String msg(String pattern, Object... arguments) {
-		return MessageFormat.format(pattern, arguments);
+		return String.format(pattern, arguments);
 	}
 
 }
