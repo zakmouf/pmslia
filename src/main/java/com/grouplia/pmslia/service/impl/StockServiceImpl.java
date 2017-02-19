@@ -24,16 +24,16 @@ public class StockServiceImpl extends BaseServiceImpl implements StockService {
 		Stock existingParent = stockDao.findStockByTicker(parent.getTicker());
 		if (existingParent != null) {
 			parent.setId(existingParent.getId());
-			logger.info(msg("update stock [{0}]", parent));
+			logger.debug(msg2("update stock [%1$s]", parent));
 			stockDao.updateStock(parent);
 		} else {
-			logger.info(msg("add stock [{0}]", parent));
+			logger.debug(msg2("add stock [%1$s]", parent));
 			stockDao.insertStock(parent);
 		}
 
 		List<Stock> existingChildren = stockDao.findChildren(parent);
 		for (Stock existingChild : existingChildren) {
-			logger.info(msg("remove child [{0}] from parent [{1}]", existingChild, parent));
+			logger.debug(msg2("remove child [%1$s] from parent [%2$s]", existingChild, parent));
 			stockDao.deleteRelation(parent, existingChild);
 		}
 
@@ -41,13 +41,13 @@ public class StockServiceImpl extends BaseServiceImpl implements StockService {
 			Stock existingChild = stockDao.findStockByTicker(child.getTicker());
 			if (existingChild != null) {
 				child.setId(existingChild.getId());
-				logger.info(msg("update stock [{0}]", child));
+				logger.debug(msg2("update stock [%1$s]", child));
 				stockDao.updateStock(child);
 			} else {
-				logger.info(msg("add stock [{0}]", child));
+				logger.debug(msg2("add stock [%1$s]", child));
 				stockDao.insertStock(child);
 			}
-			logger.info(msg("add child [{0}] to parent [{1}]", child, parent));
+			logger.debug(msg2("add child [%1$s] to parent [%2$s]", child, parent));
 			stockDao.insertRelation(parent, child);
 		}
 

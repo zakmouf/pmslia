@@ -50,7 +50,7 @@ public class UpdateServiceImpl extends BaseServiceImpl implements UpdateService 
 	@Transactional
 	public void updateNames(List<Stock> stocks) {
 		for (Stock stock : stocks) {
-			String url = msg(nameUrlPattern, stock.getTicker());
+			String url = msg2(nameUrlPattern, stock.getTicker());
 			List<String> lines = loadUrl(url);
 			String name = null;
 			if (!lines.isEmpty()) {
@@ -98,9 +98,8 @@ public class UpdateServiceImpl extends BaseServiceImpl implements UpdateService 
 				List<Price> prices2 = loadPrices(stock, fromDate2, toDate2);
 				prices.addAll(prices2);
 
-				logger.debug(
-						msg("update stock=[{0}] from=[{1,date,yyyy-MM-dd}] to=[{2,date,yyyy-MM-dd}] : prices=[{3,number,0}]",
-								stock.getTicker(), fromDate2, toDate2, prices2.size()));
+				logger.debug(msg2("update stock=[%1$s] from=[%2$tF] to=[%3$tF] : prices=[%4$d]", stock.getTicker(),
+						fromDate2, toDate2, prices2.size()));
 
 				calendar.add(Calendar.DATE, 1);
 				fromDate2 = calendar.getTime();
@@ -109,9 +108,8 @@ public class UpdateServiceImpl extends BaseServiceImpl implements UpdateService 
 
 			stockDao.insertPrices(stock, prices);
 
-			logger.info(
-					msg("update stock=[{0}] from=[{1,date,yyyy-MM-dd}] to=[{2,date,yyyy-MM-dd}] : prices=[{3,number,0}]",
-							stock.getTicker(), fromDate, toDate, prices.size()));
+			logger.info(msg2("update stock=[%1$s] from=[%2$tF] to=[%3$tF] : prices=[%4$d]", stock.getTicker(), fromDate,
+					toDate, prices.size()));
 		}
 	}
 
@@ -127,7 +125,7 @@ public class UpdateServiceImpl extends BaseServiceImpl implements UpdateService 
 		fromCalendar.setTime(fromDate);
 		Calendar toCalendar = Calendar.getInstance();
 		toCalendar.setTime(toDate);
-		String url = msg(priceUrlPattern, stock.getTicker(), fromCalendar.get(Calendar.MONTH),
+		String url = msg2(priceUrlPattern, stock.getTicker(), fromCalendar.get(Calendar.MONTH),
 				fromCalendar.get(Calendar.DATE), fromCalendar.get(Calendar.YEAR), toCalendar.get(Calendar.MONTH),
 				toCalendar.get(Calendar.DATE), toCalendar.get(Calendar.YEAR));
 
@@ -143,8 +141,8 @@ public class UpdateServiceImpl extends BaseServiceImpl implements UpdateService 
 		}
 		Collections.sort(prices);
 
-		logger.debug(msg("load stock=[{0}] from=[{1,date,yyyy-MM-dd}] to=[{2,date,yyyy-MM-dd}] : prices=[{3,number,0}]",
-				stock.getTicker(), fromDate, toDate, prices.size()));
+		logger.debug(msg2("load stock=[%1$s] from=[%2$tF] to=[%3$tF] : prices=[%4$d]", stock.getTicker(), fromDate,
+				toDate, prices.size()));
 
 		return prices;
 
@@ -162,14 +160,14 @@ public class UpdateServiceImpl extends BaseServiceImpl implements UpdateService 
 		try {
 			price.setDate(dateFormat.parse(dateAsString));
 		} catch (ParseException ex) {
-			throw new IllegalArgumentException(msg("failed to parse date [{0}]", dateAsString), ex);
+			throw new IllegalArgumentException(msg2("failed to parse date [%1$s]", dateAsString), ex);
 		}
 
 		String valueAsString = tokens[6];
 		try {
 			price.setValue(Double.valueOf(valueAsString));
 		} catch (NumberFormatException ex) {
-			throw new IllegalArgumentException(msg("failed to parse double [{0}]", valueAsString), ex);
+			throw new IllegalArgumentException(msg2("failed to parse double [%1$s]", valueAsString), ex);
 		}
 
 		return price;
@@ -191,7 +189,7 @@ public class UpdateServiceImpl extends BaseServiceImpl implements UpdateService 
 				line = buffReader.readLine();
 			}
 		} catch (IOException ex) {
-			logger.warn(msg("failed to load url=[{0}]", url));
+			logger.warn(msg2("failed to load url=[%1$s]", url));
 		} finally {
 			try {
 				if (input != null) {
@@ -202,7 +200,7 @@ public class UpdateServiceImpl extends BaseServiceImpl implements UpdateService 
 			}
 		}
 
-		logger.debug(msg("load url=[{0}] : lines=[{1,number,0}]", url, lines.size()));
+		logger.debug(msg2("load url=[%1$s] : lines=[%2$d]", url, lines.size()));
 
 		return lines;
 

@@ -70,11 +70,11 @@ public class PreviewServiceImpl extends BaseServiceImpl implements PreviewServic
 		priceHolder.addPrices(indice, indicePrices);
 
 		for (Stock stock : indiceStocks) {
-			logger.debug(msg("load stock [{0}] between inclusive [{1,date,yyyy-MM-dd}] and [{2,date,yyyy-MM-dd}]",
-					stock.getName(), effectiveFromDate, effectiveToDate));
+			logger.debug(msg2("load stock [%1$s] between inclusive [%2$tF] and [%3$tF]", stock.getTicker(),
+					effectiveFromDate, effectiveToDate));
 			List<Price> stockPrices = stockDao.findPricesBetweenInclusive(stock, effectiveFromDate, effectiveToDate);
 			logger.debug(
-					msg("stock [{0}] has [{1,number,0}] datas between inclusive [{2,date,yyyy-MM-dd}] and [{3,date,yyyy-MM-dd}]",
+					msg("stock [%1$s] has [%2$d] datas between inclusive [%3$tF] and [%4$tF]",
 							stock.getName(), stockPrices.size(), effectiveFromDate, effectiveToDate));
 			if (!stockPrices.isEmpty()) {
 				previewStocks.add(stock);
